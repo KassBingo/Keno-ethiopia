@@ -2,124 +2,89 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<meta name="theme-color" content="#101827">
-<title>Keno Ethiopia — Practice</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#07111f">
+<title>Keno Ethiopia | Multiple Practice Bets</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <style>
-:root{color-scheme:dark;--bg:#0b1220;--panel:#131e30;--panel2:#1a2940;--text:#f5f7fb;--muted:#9cacc4;--green:#35d39a;--gold:#ffc857;--red:#ff6978}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#182b45 0,#0b1220 48%);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--text);min-height:100vh}
-.wrap{max-width:560px;margin:auto;padding:16px 14px 30px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:8px 0 18px}
-.brand{display:flex;align-items:center;gap:10px}.logo{width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,#32d399,#0e8b72);display:grid;place-items:center;font-size:24px;box-shadow:0 8px 24px #0c9d7850}
-h1{font-size:20px;margin:0;letter-spacing:.2px}.sub{font-size:12px;color:var(--muted);margin-top:3px}.pill{border:1px solid #2c405a;border-radius:999px;padding:7px 10px;font-size:11px;color:#b5f5df;white-space:nowrap;background:#132d32}
-.balance{background:linear-gradient(135deg,#1c3047,#172437);border:1px solid #2b405b;border-radius:18px;padding:16px;display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
-.eyebrow{font-size:12px;color:var(--muted)}.money{font-size:26px;font-weight:800;margin-top:4px;letter-spacing:.3px}.reset{border:1px solid #41536c;background:#22344b;color:#e8eef8;border-radius:11px;padding:9px 11px;font-weight:650}
-.card{background:#111d2d;border:1px solid #25364d;border-radius:18px;padding:15px;margin:13px 0}.cardhead{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px}.cardhead h2{font-size:15px;margin:0}.small{font-size:12px;color:var(--muted)}
-.grid{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:6px}.num{aspect-ratio:1;border-radius:10px;border:1px solid #2a3c55;background:#1a2940;color:#dce6f5;font-size:13px;font-weight:750;display:grid;place-items:center;padding:0;min-width:0;position:relative;transition:transform .12s,background .12s}
-.num:active{transform:scale(.94)}.num.selected{background:var(--green);border-color:var(--green);color:#06271d}.num.win{background:var(--gold);border-color:var(--gold);color:#3b2700}.num.hit{box-shadow:0 0 0 2px var(--green) inset}.num:disabled{opacity:1}
-.actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}.btn{border:0;border-radius:12px;padding:13px 12px;font-size:14px;font-weight:800;cursor:pointer}.primary{background:var(--green);color:#06251c}.secondary{background:#243750;color:#eef4ff;border:1px solid #344c69}.gold{background:var(--gold);color:#382400}
-.row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:12px 0}.stakebox{display:flex;align-items:center;gap:8px}.stakebox button{height:35px;width:35px;border-radius:10px;border:1px solid #354a65;background:#203149;color:#fff;font-size:18px}.stake{font-size:16px;font-weight:800;min-width:90px;text-align:center}
-.results{display:flex;flex-wrap:wrap;gap:6px;min-height:32px}.ball{height:31px;width:31px;border-radius:50%;display:grid;place-items:center;background:#253750;border:1px solid #3b516c;font-size:12px;font-weight:800}.ball.hit{background:var(--green);color:#06251c;border-color:var(--green)}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}.stat{background:#19283c;border-radius:12px;padding:11px 8px;text-align:center}.stat strong{display:block;font-size:17px;margin-top:4px}.stat span{font-size:11px;color:var(--muted)}
-.notice{font-size:11px;line-height:1.5;color:#9fb0c8;margin:14px 4px 0;text-align:center}.history{display:flex;flex-direction:column;gap:8px}.hist{display:flex;justify-content:space-between;align-items:center;background:#19283c;border-radius:10px;padding:10px 11px;font-size:12px}.positive{color:var(--green)}.negative{color:var(--red)}
-@media(max-width:370px){.wrap{padding:12px 9px}.grid{gap:4px}.num{font-size:11px;border-radius:7px}.card{padding:12px}.money{font-size:23px}}
+:root{color-scheme:dark;--bg:#07111f;--panel:#101e31;--line:#263d57;--text:#f4f8ff;--muted:#9db0c8;--mint:#54efb5;--gold:#ffd166;--red:#ff7185}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -15%,#23466b 0,transparent 45%),linear-gradient(180deg,#0a1728,#07111f 70%);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--text);min-height:100vh}
+button,select{font:inherit;touch-action:manipulation}button{cursor:pointer}.wrap{max-width:620px;margin:auto;padding:calc(14px + env(safe-area-inset-top)) 13px calc(25px + env(safe-area-inset-bottom))}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:5px 0 17px}.brand{display:flex;align-items:center;gap:10px}.logo{height:46px;width:46px;display:grid;place-items:center;border-radius:15px;background:linear-gradient(145deg,#79ffd0,#13ad7d);color:#06261b;font-size:25px}.brand h1{font-size:20px;margin:0;font-weight:900;letter-spacing:-.5px}.sub{font-size:12px;color:var(--muted);margin-top:3px}.free{font-size:10px;letter-spacing:1px;font-weight:900;padding:8px 10px;border-radius:999px;border:1px solid #24664f;background:#10372f;color:#9bffda}
+.balance{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:16px;border:1px solid #31506a;border-radius:19px;background:linear-gradient(125deg,#1a3951,#14263b 60%,#183d3d);margin-bottom:13px}.eyebrow{font-size:11px;color:#b4c7db;text-transform:uppercase;font-weight:750}.money{font-size:27px;font-weight:900;margin-top:4px}.balance-note{font-size:11px;color:#a7c7ce;margin-top:3px}.btn{border:0;border-radius:12px;padding:12px 10px;font-size:13px;font-weight:850}.primary{background:linear-gradient(110deg,#6dffd0,#36d9a2);color:#05251b}.secondary{background:#20354d;color:#edf5ff;border:1px solid #344d69}.gold{background:linear-gradient(110deg,#ffe6a0,#ffc94e);color:#382500}.btn:disabled{opacity:.55;cursor:wait}
+.card{background:linear-gradient(150deg,#122238,#0e1b2d);border:1px solid var(--line);border-radius:18px;padding:14px;margin:13px 0}.head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:12px}.head h2{font-size:14px;margin:0}.muted{color:var(--muted);font-size:11px}.tag{background:#1a2d43;padding:6px 9px;border-radius:99px;font-size:11px;color:#c5d5e8}.tabs{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:12px}.tab{background:#172a40;border:1px solid #2b425b;color:#c8d8e9;border-radius:11px;padding:10px 6px;font-size:12px;font-weight:800}.tab.active{background:#164a3b;border-color:#3bd8a4;color:#a4ffdc}
+.grid{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:5px}.num{aspect-ratio:1;border-radius:9px;border:1px solid #2b425c;background:linear-gradient(145deg,#1d3048,#17273b);color:#d9e6f6;font-size:clamp(11px,3.2vw,14px);font-weight:800;padding:0;min-width:0}.num.selected{background:linear-gradient(145deg,#73ffd0,#36dca6);border-color:#91ffda;color:#05271d}.num.win{background:linear-gradient(145deg,#ffe7a1,#ffc94d);border-color:var(--gold);color:#422b00}.num.hit{outline:2px solid var(--mint);outline-offset:1px}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.betlist{display:flex;flex-direction:column;gap:9px}.betrow{border:1px solid #2c435d;background:#16283d;border-radius:13px;padding:11px}.betrow.active{border-color:#4be5b0;box-shadow:0 0 0 1px #4be5b033}.bettop{display:flex;align-items:center;justify-content:space-between;gap:7px}.betname{font-size:13px;font-weight:900}.betmeta{font-size:11px;color:var(--muted);margin-top:4px}.betcontrols{display:flex;align-items:center;gap:6px}.tiny{border:1px solid #3a536c;background:#233a52;color:#fff;border-radius:8px;padding:6px 8px;font-size:11px;font-weight:800}.tiny.danger{color:#ff9ca9;border-color:#754151;background:#382334}.stakecontrols{display:flex;align-items:center;gap:6px;margin-top:9px}.stakecontrols button{width:29px;height:29px;padding:0;font-size:18px}.stakeval{font-size:12px;font-weight:900;min-width:72px;text-align:center}.row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:10px 0}.sum{border-top:1px solid #2b4057;margin-top:12px;padding-top:11px;display:flex;justify-content:space-between;gap:10px;font-size:13px;font-weight:850}.sum strong{color:var(--mint)}
+.drawbtn{width:100%;padding:15px;font-size:15px}.status{text-align:center;font-size:11px;color:#8ea4be;margin:7px 0 2px;min-height:16px}.results{display:flex;flex-wrap:wrap;gap:6px;min-height:31px}.ball{height:30px;width:30px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(145deg,#2a415b,#1a2d43);border:1px solid #405875;font-size:11px;font-weight:900}.ball.hit{background:linear-gradient(145deg,#73ffd0,#35dca4);color:#06251b;border-color:var(--mint)}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:12px}.stat{background:#17283d;border:1px solid #263c55;border-radius:12px;padding:10px 4px;text-align:center}.stat span{font-size:10px;color:var(--muted)}.stat strong{display:block;font-size:clamp(12px,3.5vw,16px);margin-top:5px;overflow-wrap:anywhere}.positive{color:var(--mint)}.negative{color:var(--red)}.history{display:flex;flex-direction:column;gap:7px}.hist{display:flex;justify-content:space-between;align-items:center;gap:8px;background:#17283d;border:1px solid #233951;border-radius:11px;padding:10px;font-size:11px}.notice{font-size:10px;line-height:1.55;color:#8195ae;margin:15px 5px 0;text-align:center}.tip{background:#102b2b;border:1px solid #1c4d43;border-radius:12px;padding:10px;font-size:11px;line-height:1.45;color:#bcebdc;margin-top:11px}
+@media(max-width:380px){.wrap{padding-left:9px;padding-right:9px}.grid{gap:4px}.num{border-radius:7px}.card{padding:11px}.logo{width:40px;height:40px}.free{font-size:9px;padding:7px}.betrow{padding:9px}}
 </style>
 </head>
-<body>
-<main class="wrap">
-  <header class="top">
-    <div class="brand"><div class="logo">✦</div><div><h1>Keno Ethiopia</h1><div class="sub">Quick picks. Just for practice.</div></div></div>
-    <div class="pill">FREE PLAY</div>
-  </header>
-  <section class="balance">
-    <div><div class="eyebrow">Practice balance</div><div class="money" id="balance">ETB 1,000.00</div></div>
-    <button class="reset" id="reset">Reset</button>
-  </section>
-  <section class="card">
-    <div class="cardhead"><h2>Choose your numbers</h2><span class="small"><b id="pickCount">0</b>/10 selected</span></div>
-    <div class="grid" id="grid" aria-label="Keno numbers"></div>
-    <div class="actions"><button class="btn secondary" id="auto">⚡ Auto Pick</button><button class="btn secondary" id="clear">Clear picks</button></div>
-  </section>
-  <section class="card">
-    <div class="row"><div><div style="font-weight:750;font-size:14px">Practice stake</div><div class="small">Simulated only · no real money</div></div>
-      <div class="stakebox"><button id="minus" aria-label="Decrease stake">−</button><div class="stake" id="stake">ETB 10</div><button id="plus" aria-label="Increase stake">+</button></div>
-    </div>
-    <button class="btn primary" id="draw" style="width:100%">Draw 20 numbers</button>
-    <div class="row"><div style="font-weight:750;font-size:14px">Draw results</div><span class="small" id="drawStatus">Ready when you are</span></div>
-    <div class="results" id="results"><span class="small">Your winning numbers will appear here.</span></div>
-    <div class="stats">
-      <div class="stat"><span>Matched</span><strong id="matched">—</strong></div>
-      <div class="stat"><span>Practice return</span><strong id="payout">ETB 0</strong></div>
-      <div class="stat"><span>Net result</span><strong id="net">ETB 0</strong></div>
-    </div>
-  </section>
-  <section class="card">
-    <div class="cardhead"><h2>Recent rounds</h2><span class="small">Saved on this device</span></div>
-    <div class="history" id="history"><div class="small">Your rounds will show here.</div></div>
-  </section>
-  <p class="notice">Practice game only. ETB amounts are fictional points, not cash or a promise of winnings. Results are randomly generated on your device. Your balance and history stay in this browser.</p>
+<body><main class="wrap">
+<header class="top"><div class="brand"><div class="logo">✦</div><div><h1>Keno Ethiopia</h1><div class="sub">Multiple bets · one shared draw</div></div></div><div class="free">FREE PLAY</div></header>
+<section class="balance"><div><div class="eyebrow">✧ Practice balance</div><div class="money" id="balance">ETB 1,000.00</div><div class="balance-note">Fictional points · no cash value</div></div><button class="btn secondary" id="reset">↻ Reset</button></section>
+
+<section class="card"><div class="head"><h2>1. Build your bets</h2><span class="tag" id="betcount">2 / 5 bets</span></div>
+<div class="tabs"><button class="tab active" id="tabIndependent">Independent numbers</button><button class="tab" id="tabSame">Same numbers, multiple stakes</button></div>
+<div class="muted" id="modehelp" style="margin-bottom:10px">Each bet can have its own numbers and practice stake. Select a bet below, then tap numbers 1–80.</div>
+<div class="betlist" id="bets"></div>
+<div class="actions"><button class="btn secondary" id="addBet">＋ Add bet</button><button class="btn secondary" id="auto">⚡ Auto Pick</button></div>
+<div class="actions"><button class="btn secondary" id="clear">✕ Clear active picks</button><button class="btn secondary" id="copyPicks">⧉ Copy active picks</button></div>
+<div class="sum"><span>Total stake for next round</span><strong id="totalStake">ETB 30.00</strong></div>
+<div class="tip">Choose a bet to edit its numbers. In <b>Same numbers, multiple stakes</b> mode, every bet shares one number selection, while each bet keeps its own stake.</div>
+</section>
+
+<section class="card"><div class="head"><h2>2. Select numbers</h2><span class="tag"><b id="pickCount">0</b> / 10 selected</span></div><div class="grid" id="grid"></div></section>
+
+<section class="card"><div class="head"><h2>3. Draw once for all bets</h2><span class="muted">20 winning numbers</span></div><button class="btn primary drawbtn" id="draw">Draw 20 numbers →</button><div class="status" id="status" role="status" aria-live="polite">Select at least one number for each bet before drawing.</div><div class="row"><strong style="font-size:13px">Draw results</strong><span class="muted">One shared draw</span></div><div class="results" id="results"><span class="muted">Winning numbers appear here.</span></div><div class="stats"><div class="stat"><span>Total matches</span><strong id="matchTotal">—</strong></div><div class="stat"><span>Total return</span><strong id="returnTotal">ETB 0.00</strong></div><div class="stat"><span>Round net</span><strong id="netTotal">ETB 0.00</strong></div></div><div id="roundBreakdown" class="betlist" style="margin-top:11px"></div></section>
+
+<section class="card"><div class="head"><h2>Recent rounds</h2><span class="muted">Saved on this device</span></div><div class="history" id="history"><div class="muted">No rounds yet.</div></div></section>
+<p class="notice">Independent, free Keno-style practice game; not affiliated with Kiron or any gambling operator. ETB amounts are fictional points, not cash or a promise of winnings. Illustrative practice payout rule only, not an official paytable. Game history and balance are saved in this browser on this device.</p>
 </main>
 <script>
-(() => {
- const tg = window.Telegram && window.Telegram.WebApp;
- if (tg) { tg.ready(); tg.expand(); try { tg.setHeaderColor('#101827'); tg.setBackgroundColor('#0b1220'); } catch(e){} }
- const $ = id => document.getElementById(id);
- let balance = Number(localStorage.getItem('ke_balance') || 1000);
- let stake = 10, selected = new Set(), winning = new Set(), busy = false, history = [];
- try { history = JSON.parse(localStorage.getItem('ke_history') || '[]'); } catch(e) { history=[]; }
- const money = n => 'ETB ' + Number(n).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
- function persist(){ localStorage.setItem('ke_balance', String(balance)); localStorage.setItem('ke_history', JSON.stringify(history.slice(0,8))); }
- function renderGrid(){
-   $('grid').innerHTML='';
-   for(let n=1;n<=80;n++){
-     const b=document.createElement('button'); b.className='num'; b.textContent=n; b.type='button';
-     if(selected.has(n)) b.classList.add('selected');
-     if(winning.has(n)){ b.classList.add('win'); if(selected.has(n)) b.classList.add('hit'); }
-     b.disabled=busy;
-     b.setAttribute('aria-label','Number '+n+(selected.has(n)?', selected':''));
-     b.onclick=()=>{ if(selected.has(n)) selected.delete(n); else if(selected.size<10) selected.add(n); else { $('drawStatus').textContent='Choose up to 10 numbers'; return; } renderGrid(); };
-     $('grid').appendChild(b);
-   }
-   $('pickCount').textContent=selected.size;
+(()=> {
+ const tg=window.Telegram&&window.Telegram.WebApp;if(tg){tg.ready();tg.expand();try{tg.setHeaderColor('#07111f');tg.setBackgroundColor('#07111f')}catch(e){}}
+ const $=id=>document.getElementById(id), money=n=>'ETB '+Number(n).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+ let balance=Number(localStorage.getItem('ke_multi_balance')||localStorage.getItem('ke_balance')||1000);
+ let mode='independent', activeId=1, nextId=3, busy=false, winning=new Set(), drawn=[];
+ let shared=new Set();
+ let bets=[{id:1,stake:10,picks:new Set([7,12,23,34,45])},{id:2,stake:20,picks:new Set([4,17,28,39,52])}];
+ let history=[];try{history=JSON.parse(localStorage.getItem('ke_multi_history')||'[]');if(!Array.isArray(history))history=[]}catch(e){history=[]}
+ function activeBet(){return bets.find(b=>b.id===activeId)||bets[0]}
+ function picksFor(b){return mode==='same'?shared:b.picks}
+ function persist(){try{localStorage.setItem('ke_multi_balance',String(balance));localStorage.setItem('ke_multi_history',JSON.stringify(history.slice(0,8)))}catch(e){}}
+ function renderBalance(){$('balance').textContent=money(balance);$('totalStake').textContent=money(bets.reduce((s,b)=>s+b.stake,0));$('betcount').textContent=bets.length+' / 5 bets'}
+ function renderBets(){
+  $('bets').innerHTML='';
+  bets.forEach(b=>{
+   const row=document.createElement('div');row.className='betrow'+(b.id===activeId?' active':'');
+   const top=document.createElement('div');top.className='bettop';
+   const info=document.createElement('div');const name=document.createElement('div');name.className='betname';name.textContent='Bet '+b.id+(b.id===activeId?' · Editing':'');const meta=document.createElement('div');meta.className='betmeta';meta.textContent=(picksFor(b).size)+' numbers selected';info.append(name,meta);
+   const controls=document.createElement('div');controls.className='betcontrols';const edit=document.createElement('button');edit.className='tiny';edit.textContent=b.id===activeId?'Selected':'Edit';edit.disabled=busy;edit.onclick=()=>{activeId=b.id;renderAll()};controls.append(edit);
+   if(bets.length>1){const del=document.createElement('button');del.className='tiny danger';del.textContent='Remove';del.disabled=busy;del.onclick=()=>{bets=bets.filter(x=>x.id!==b.id);if(activeId===b.id)activeId=bets[0].id;renderAll()};controls.append(del)}
+   top.append(info,controls);const stakeRow=document.createElement('div');stakeRow.className='stakecontrols';const minus=document.createElement('button');minus.className='tiny';minus.textContent='−';minus.disabled=busy||b.stake<=10;minus.onclick=()=>{b.stake=Math.max(10,b.stake-10);renderBalance();renderBets()};const val=document.createElement('span');val.className='stakeval';val.textContent=money(b.stake);const plus=document.createElement('button');plus.className='tiny';plus.textContent='+';plus.disabled=busy||b.stake>=1000;plus.onclick=()=>{b.stake=Math.min(1000,b.stake+10);renderBalance();renderBets()};stakeRow.append(minus,val,plus);row.append(top,stakeRow);$('bets').append(row)
+  });
+  $('addBet').disabled=busy||bets.length>=5;$('addBet').textContent=bets.length>=5?'Maximum 5 bets reached':'＋ Add bet';
  }
- function renderBalance(){ $('balance').textContent=money(balance); $('stake').textContent='ETB '+stake; }
- function renderHistory(){
-   $('history').innerHTML='';
-   if(!history.length){ $('history').innerHTML='<div class="small">Your rounds will show here.</div>'; return; }
-   history.slice(0,6).forEach(h=>{
-     const div=document.createElement('div'); div.className='hist';
-     const left=document.createElement('span'); left.textContent=h.time+' · '+h.hits+' hit'+(h.hits===1?'':'s');
-     const right=document.createElement('strong'); right.textContent=(h.net>=0?'+':'−')+' ETB '+Math.abs(h.net).toFixed(2); right.className=h.net>=0?'positive':'negative';
-     div.append(left,right); $('history').appendChild(div);
-   });
- }
- function randomSet(max,count){ const arr=Array.from({length:max},(_,i)=>i+1); for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];} return arr.slice(0,count); }
- function setResults(nums){ $('results').innerHTML=''; nums.forEach(n=>{const b=document.createElement('span');b.className='ball'+(selected.has(n)?' hit':'');b.textContent=n;$('results').appendChild(b);}); }
- $('auto').onclick=()=>{ if(busy)return; selected=new Set(randomSet(80,5)); winning.clear(); $('drawStatus').textContent='5 numbers auto-picked'; $('results').innerHTML='<span class="small">Ready for the draw.</span>'; $('matched').textContent='—'; $('payout').textContent='ETB 0'; $('net').textContent='ETB 0'; renderGrid(); };
- $('clear').onclick=()=>{if(busy)return;selected.clear();winning.clear();renderGrid();$('drawStatus').textContent='Picks cleared';$('results').innerHTML='<span class="small">Your winning numbers will appear here.</span>';};
- $('minus').onclick=()=>{stake=Math.max(10,stake-10);renderBalance();};
- $('plus').onclick=()=>{stake=Math.min(1000,stake+10);renderBalance();};
- $('reset').onclick=()=>{if(busy)return;balance=1000;stake=10;selected.clear();winning.clear();history=[];persist();renderBalance();renderGrid();renderHistory();$('matched').textContent='—';$('payout').textContent='ETB 0';$('net').textContent='ETB 0';$('drawStatus').textContent='Practice balance reset';$('results').innerHTML='<span class="small">Your winning numbers will appear here.</span>';};
- $('draw').onclick=async()=>{
-   if(busy)return;
-   if(selected.size<1){$('drawStatus').textContent='Pick at least one number first';return;}
-   if(balance<stake){$('drawStatus').textContent='Practice balance too low — reset it';return;}
-   busy=true; $('draw').disabled=true; $('auto').disabled=true; $('clear').disabled=true; $('drawStatus').textContent='Drawing…'; winning.clear(); renderGrid(); $('results').innerHTML='';
-   const nums=randomSet(80,20);
-   for(let i=0;i<nums.length;i++){ winning.add(nums[i]); setResults(nums.slice(0,i+1)); renderGrid(); await new Promise(r=>setTimeout(r,85)); }
-   const hits=nums.filter(n=>selected.has(n)).length;
-   // Illustrative practice multipliers only; not based on Kiron or a real-money paytable.
-   const multipliers={1:0,2:0,3:1,4:2,5:4,6:8,7:15,8:30,9:60,10:100};
-   const multiplier=multipliers[selected.size]||0;
-   const returnAmount=hits>=Math.ceil(selected.size*0.7) ? stake*multiplier : 0;
-   // Avoid implying a guaranteed or official paytable: this is a simple local practice rule.
-   const paid = (hits===selected.size && selected.size>=3) ? returnAmount : 0;
-   const net=paid-stake; balance=Math.max(0,balance+net);
-   $('matched').textContent=hits+' / '+selected.size; $('payout').textContent=money(paid); $('net').textContent=(net>=0?'+':'−')+' '+money(Math.abs(net)); $('net').style.color=net>=0?'var(--green)':'var(--red)';
-   $('drawStatus').textContent='Round complete'; history.unshift({time:new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}),hits,net}); persist(); renderBalance(); renderHistory();
-   busy=false; $('draw').disabled=false; $('auto').disabled=false; $('clear').disabled=false; renderGrid();
+ function renderGrid(){const chosen=picksFor(activeBet());$('grid').innerHTML='';for(let n=1;n<=80;n++){const b=document.createElement('button');b.type='button';b.className='num';b.textContent=n;if(chosen.has(n))b.classList.add('selected');if(winning.has(n)){b.classList.add('win');if(chosen.has(n))b.classList.add('hit')}b.disabled=busy;b.setAttribute('aria-pressed',chosen.has(n)?'true':'false');b.onclick=()=>{if(busy)return;const p=picksFor(activeBet());if(p.has(n))p.delete(n);else if(p.size<10)p.add(n);else{$('status').textContent='Each selection can contain up to 10 numbers.';return}renderAll()};$('grid').append(b)}$('pickCount').textContent=chosen.size}
+ function renderResults(){if(!drawn.length){$('results').innerHTML='<span class="muted">Winning numbers appear here.</span>';return}$('results').innerHTML='';drawn.forEach(n=>{const b=document.createElement('span');b.className='ball'+(bets.some(x=>picksFor(x).has(n))?' hit':'');b.textContent=n;$('results').append(b)})}
+ function renderHistory(){$('history').innerHTML='';if(!history.length){$('history').innerHTML='<div class="muted">No rounds yet. Set up bets and draw your first round.</div>';return}history.slice(0,6).forEach(h=>{const r=document.createElement('div');r.className='hist';const a=document.createElement('span');a.textContent=h.time+' · '+h.count+' bets';const b=document.createElement('strong');b.className=h.net>=0?'positive':'negative';b.textContent=(h.net>=0?'+':'−')+money(Math.abs(h.net));r.append(a,b);$('history').append(r)})}
+ function renderAll(){renderBalance();renderBets();renderGrid();renderResults()}
+ function randomSet(max,count){const a=Array.from({length:max},(_,i)=>i+1);for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a.slice(0,count)}
+ function setMode(m){if(busy||mode===m)return;if(m==='same'){shared=new Set(activeBet().picks)}else if(mode==='same'){bets.forEach(b=>b.picks=new Set(shared))}mode=m;$('tabIndependent').classList.toggle('active',mode==='independent');$('tabSame').classList.toggle('active',mode==='same');$('modehelp').textContent=mode==='independent'?'Each bet can have its own numbers and practice stake. Select a bet below, then tap numbers 1–80.':'All bets share one number selection. Change a stake on any bet without changing the shared numbers.';renderAll()}
+ $('tabIndependent').onclick=()=>setMode('independent');$('tabSame').onclick=()=>setMode('same');
+ $('addBet').onclick=()=>{if(busy||bets.length>=5)return;const id=nextId++;const b={id,stake:10,picks:new Set()};if(mode==='same')shared=new Set(shared);bets.push(b);activeId=id;renderAll()};
+ $('auto').onclick=()=>{if(busy)return;const p=mode==='same'?shared:activeBet().picks;p.clear();randomSet(80,5).forEach(n=>p.add(n));winning.clear();drawn=[];$('status').textContent='Five numbers selected for '+(mode==='same'?'all bets':'Bet '+activeId)+'. Ready to draw.';$('roundBreakdown').innerHTML='';renderAll()};
+ $('clear').onclick=()=>{if(busy)return;picksFor(activeBet()).clear();winning.clear();drawn=[];$('status').textContent='Active number selection cleared.';$('roundBreakdown').innerHTML='';renderAll()};
+ $('copyPicks').onclick=()=>{if(busy||mode==='same')return;const src=new Set(activeBet().picks);bets.forEach(b=>{if(b.id!==activeId)b.picks=new Set(src)});$('status').textContent='Copied active numbers to all bets.';renderAll()};
+ $('copyPicks').addEventListener('click',()=>{if(mode==='same')$('status').textContent='In shared mode, all bets already use the same numbers.'});
+ $('reset').onclick=()=>{if(busy)return;if(!confirm('Reset practice balance and clear saved multiple-bet history?'))return;balance=1000;history=[];persist();winning.clear();drawn=[];renderAll();renderHistory();$('roundBreakdown').innerHTML='';$('status').textContent='Practice balance reset.'};
+ $('draw').onclick=async()=>{if(busy)return;const invalid=bets.find(b=>picksFor(b).size<1);if(invalid){activeId=invalid.id;renderAll();$('status').textContent='Select at least one number for every bet. Bet '+invalid.id+' needs numbers.';return}const totalStake=bets.reduce((s,b)=>s+b.stake,0);if(balance<totalStake){$('status').textContent='Not enough practice points for all bets. Reduce stakes or reset your balance.';return}
+ busy=true;$('draw').disabled=true;$('draw').textContent='Drawing…';$('status').textContent='One shared draw is in progress…';winning.clear();drawn=[];renderAll();const nums=randomSet(80,20);
+ for(let i=0;i<nums.length;i++){drawn.push(nums[i]);winning.add(nums[i]);renderGrid();renderResults();await new Promise(r=>setTimeout(r,55))}
+ let totalReturn=0,totalNet=0,totalHits=0;const payoutMult={3:1,4:2,5:4,6:8,7:15,8:30,9:60,10:100};$('roundBreakdown').innerHTML='';
+ bets.forEach(b=>{const p=picksFor(b),hits=nums.filter(n=>p.has(n)).length;totalHits+=hits;const mult=payoutMult[p.size]||0;const ret=(hits===p.size&&p.size>=3)?b.stake*mult:0;const net=ret-b.stake;totalReturn+=ret;totalNet+=net;const row=document.createElement('div');row.className='betrow';const top=document.createElement('div');top.className='bettop';const label=document.createElement('strong');label.textContent='Bet '+b.id+' · '+hits+'/'+p.size+' matches';const outcome=document.createElement('strong');outcome.className=net>=0?'positive':'negative';outcome.textContent=(net>=0?'+':'−')+money(Math.abs(net));top.append(label,outcome);const sub=document.createElement('div');sub.className='betmeta';sub.textContent='Stake '+money(b.stake)+' · Practice return '+money(ret);row.append(top,sub);$('roundBreakdown').append(row)});
+ balance=Math.max(0,balance+totalNet);$('matchTotal').textContent=String(totalHits);$('returnTotal').textContent=money(totalReturn);$('netTotal').textContent=(totalNet>=0?'+':'−')+' '+money(Math.abs(totalNet));$('netTotal').className=totalNet>=0?'positive':'negative';$('status').textContent='Round complete. All bets used the same 20 drawn numbers.';history.unshift({time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),count:bets.length,net:totalNet});persist();busy=false;$('draw').disabled=false;$('draw').textContent='Draw 20 numbers →';renderAll();renderHistory();
  };
- renderBalance(); renderGrid(); renderHistory();
+ renderAll();renderHistory();
 })();
-</script>
-</body>
-</html>
+</script></body></html>
