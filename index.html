@@ -35,10 +35,12 @@ button,select{font:inherit;touch-action:manipulation}button{cursor:pointer}.wrap
 
 <section class="card"><div class="head"><h2>2. Select numbers</h2><span class="tag"><b id="pickCount">0</b> / 10 selected</span></div><div class="grid" id="grid"></div></section>
 
+<section class="card"><div class="head"><h2>Fixed-odds practice paytable</h2><span class="muted">Ohio Lottery-style</span></div>
+<div class="muted" style="line-height:1.5;margin-bottom:8px">Published prize amounts adapted as total-return multipliers per ETB 1 stake. Unlisted match counts pay ETB 0. Practice simulation only, not an official Ethiopian paytable.</div><div id="paytable" class="history"></div></section>
 <section class="card"><div class="head"><h2>3. Draw once for all bets</h2><span class="muted">20 winning numbers</span></div><button class="btn primary drawbtn" id="draw">Draw 20 numbers →</button><div class="status" id="status" role="status" aria-live="polite">Select at least one number for each bet before drawing.</div><div class="row"><strong style="font-size:13px">Draw results</strong><span class="muted">One shared draw</span></div><div class="results" id="results"><span class="muted">Winning numbers appear here.</span></div><div class="stats"><div class="stat"><span>Total matches</span><strong id="matchTotal">—</strong></div><div class="stat"><span>Total return</span><strong id="returnTotal">ETB 0.00</strong></div><div class="stat"><span>Round net</span><strong id="netTotal">ETB 0.00</strong></div></div><div id="roundBreakdown" class="betlist" style="margin-top:11px"></div></section>
 
 <section class="card"><div class="head"><h2>Recent rounds</h2><span class="muted">Saved on this device</span></div><div class="history" id="history"><div class="muted">No rounds yet.</div></div></section>
-<p class="notice">Independent, free Keno-style practice game; not affiliated with Kiron or any gambling operator. ETB amounts are fictional points, not cash or a promise of winnings. Illustrative practice payout rule only, not an official paytable. Game history and balance are saved in this browser on this device.</p>
+<p class="notice">Independent, free Keno-style practice game; not affiliated with Kiron or any gambling operator. ETB amounts are fictional points, not cash or a promise of winnings. Practice payouts are adapted from the Ohio Lottery KENO paytable; fictional ETB points only, not official Ethiopian payouts. Game history and balance are saved in this browser on this device.</p>
 </main>
 <script>
 (()=> {
@@ -68,8 +70,30 @@ button,select{font:inherit;touch-action:manipulation}button{cursor:pointer}.wrap
  function renderGrid(){const chosen=picksFor(activeBet());$('grid').innerHTML='';for(let n=1;n<=80;n++){const b=document.createElement('button');b.type='button';b.className='num';b.textContent=n;if(chosen.has(n))b.classList.add('selected');if(winning.has(n)){b.classList.add('win');if(chosen.has(n))b.classList.add('hit')}b.disabled=busy;b.setAttribute('aria-pressed',chosen.has(n)?'true':'false');b.onclick=()=>{if(busy)return;const p=picksFor(activeBet());if(p.has(n))p.delete(n);else if(p.size<10)p.add(n);else{$('status').textContent='Each selection can contain up to 10 numbers.';return}renderAll()};$('grid').append(b)}$('pickCount').textContent=chosen.size}
  function renderResults(){if(!drawn.length){$('results').innerHTML='<span class="muted">Winning numbers appear here.</span>';return}$('results').innerHTML='';drawn.forEach(n=>{const b=document.createElement('span');b.className='ball'+(bets.some(x=>picksFor(x).has(n))?' hit':'');b.textContent=n;$('results').append(b)})}
  function renderHistory(){$('history').innerHTML='';if(!history.length){$('history').innerHTML='<div class="muted">No rounds yet. Set up bets and draw your first round.</div>';return}history.slice(0,6).forEach(h=>{const r=document.createElement('div');r.className='hist';const a=document.createElement('span');a.textContent=h.time+' · '+h.count+' bets';const b=document.createElement('strong');b.className=h.net>=0?'positive':'negative';b.textContent=(h.net>=0?'+':'−')+money(Math.abs(h.net));r.append(a,b);$('history').append(r)})}
- function renderAll(){renderBalance();renderBets();renderGrid();renderResults()}
+ function renderAll(){renderBalance();renderBets();renderGrid();renderResults();renderPaytable()}
  function randomSet(max,count){const a=Array.from({length:max},(_,i)=>i+1);for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a.slice(0,count)}
+ // Fixed prize amounts per $1 wager from the Ohio Lottery KENO paytable.
+ // Values are treated as total-return multipliers in this fictional practice game.
+ const payoutTable = {
+  1:{1:2}, 2:{2:11}, 3:{2:2,3:27}, 4:{2:1,3:5,4:72},
+  5:{3:2,4:18,5:410}, 6:{3:1,4:7,5:57,6:1100},
+  7:{3:1,4:5,5:11,6:100,7:2000},
+  8:{4:2,5:15,6:50,7:300,8:10000},
+  9:{4:2,5:5,6:20,7:100,8:2000,9:25000},
+  10:{0:5,5:2,6:10,7:50,8:500,9:5000,10:100000}
+ };
+ function renderPaytable(){
+  const b=activeBet(),count=picksFor(b).size,box=$('paytable');box.innerHTML='';
+  if(!count){box.innerHTML='<div class="muted">Select numbers to see the paytable.</div>';return}
+  const head=document.createElement('div');head.className='muted';head.style.marginBottom='4px';
+  head.textContent='Bet '+b.id+' · '+count+' selected · stake '+money(b.stake);box.append(head);
+  for(let hits=0;hits<=count;hits++){
+   const mult=(payoutTable[count]||{})[hits]||0,row=document.createElement('div');row.className='hist';
+   const label=document.createElement('span');label.textContent=hits+' match'+(hits===1?'':'es');
+   const amount=document.createElement('strong');amount.textContent=mult?money(b.stake*mult)+' total return ('+mult+'×)':'ETB 0.00';
+   if(mult)amount.className='positive';row.append(label,amount);box.append(row);
+  }
+ }
  function setMode(m){if(busy||mode===m)return;if(m==='same'){shared=new Set(activeBet().picks)}else if(mode==='same'){bets.forEach(b=>b.picks=new Set(shared))}mode=m;$('tabIndependent').classList.toggle('active',mode==='independent');$('tabSame').classList.toggle('active',mode==='same');$('modehelp').textContent=mode==='independent'?'Each bet can have its own numbers and practice stake. Select a bet below, then tap numbers 1–80.':'All bets share one number selection. Change a stake on any bet without changing the shared numbers.';renderAll()}
  $('tabIndependent').onclick=()=>setMode('independent');$('tabSame').onclick=()=>setMode('same');
  $('addBet').onclick=()=>{if(busy||bets.length>=5)return;const id=nextId++;const b={id,stake:10,picks:new Set()};if(mode==='same')shared=new Set(shared);bets.push(b);activeId=id;renderAll()};
@@ -81,8 +105,8 @@ button,select{font:inherit;touch-action:manipulation}button{cursor:pointer}.wrap
  $('draw').onclick=async()=>{if(busy)return;const invalid=bets.find(b=>picksFor(b).size<1);if(invalid){activeId=invalid.id;renderAll();$('status').textContent='Select at least one number for every bet. Bet '+invalid.id+' needs numbers.';return}const totalStake=bets.reduce((s,b)=>s+b.stake,0);if(balance<totalStake){$('status').textContent='Not enough practice points for all bets. Reduce stakes or reset your balance.';return}
  busy=true;$('draw').disabled=true;$('draw').textContent='Drawing…';$('status').textContent='One shared draw is in progress…';winning.clear();drawn=[];renderAll();const nums=randomSet(80,20);
  for(let i=0;i<nums.length;i++){drawn.push(nums[i]);winning.add(nums[i]);renderGrid();renderResults();await new Promise(r=>setTimeout(r,55))}
- let totalReturn=0,totalNet=0,totalHits=0;const payoutMult={3:1,4:2,5:4,6:8,7:15,8:30,9:60,10:100};$('roundBreakdown').innerHTML='';
- bets.forEach(b=>{const p=picksFor(b),hits=nums.filter(n=>p.has(n)).length;totalHits+=hits;const mult=payoutMult[p.size]||0;const ret=(hits===p.size&&p.size>=3)?b.stake*mult:0;const net=ret-b.stake;totalReturn+=ret;totalNet+=net;const row=document.createElement('div');row.className='betrow';const top=document.createElement('div');top.className='bettop';const label=document.createElement('strong');label.textContent='Bet '+b.id+' · '+hits+'/'+p.size+' matches';const outcome=document.createElement('strong');outcome.className=net>=0?'positive':'negative';outcome.textContent=(net>=0?'+':'−')+money(Math.abs(net));top.append(label,outcome);const sub=document.createElement('div');sub.className='betmeta';sub.textContent='Stake '+money(b.stake)+' · Practice return '+money(ret);row.append(top,sub);$('roundBreakdown').append(row)});
+ let totalReturn=0,totalNet=0,totalHits=0;$('roundBreakdown').innerHTML='';
+ bets.forEach(b=>{const p=picksFor(b),hits=nums.filter(n=>p.has(n)).length;totalHits+=hits;const mult=((payoutTable[p.size]||{})[hits])||0;const ret=b.stake*mult;const net=ret-b.stake;totalReturn+=ret;totalNet+=net;const row=document.createElement('div');row.className='betrow';const top=document.createElement('div');top.className='bettop';const label=document.createElement('strong');label.textContent='Bet '+b.id+' · '+hits+'/'+p.size+' matches';const outcome=document.createElement('strong');outcome.className=net>=0?'positive':'negative';outcome.textContent=(net>=0?'+':'−')+money(Math.abs(net));top.append(label,outcome);const sub=document.createElement('div');sub.className='betmeta';sub.textContent='Stake '+money(b.stake)+' · '+hits+'/'+p.size+' matches · '+(mult?mult+'× fixed odds · ':'')+'Total return '+money(ret);row.append(top,sub);$('roundBreakdown').append(row)});
  balance=Math.max(0,balance+totalNet);$('matchTotal').textContent=String(totalHits);$('returnTotal').textContent=money(totalReturn);$('netTotal').textContent=(totalNet>=0?'+':'−')+' '+money(Math.abs(totalNet));$('netTotal').className=totalNet>=0?'positive':'negative';$('status').textContent='Round complete. All bets used the same 20 drawn numbers.';history.unshift({time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),count:bets.length,net:totalNet});persist();busy=false;$('draw').disabled=false;$('draw').textContent='Draw 20 numbers →';renderAll();renderHistory();
  };
  renderAll();renderHistory();
