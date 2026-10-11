@@ -3,8 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<meta name="theme-color" content="#101827">
-<title>Keno Ethiopia — Practice</title>
+<meta name="theme-color" content="#07111f">
+<meta name="description" content="Keno Ethiopia — free Keno-style practice game. No real-money betting.">
+<title>Keno Ethiopia | Free Practice</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <style>
 :root{color-scheme:dark;--bg:#0b1220;--panel:#131e30;--panel2:#1a2940;--text:#f5f7fb;--muted:#9cacc4;--green:#35d39a;--gold:#ffc857;--red:#ff6978}
@@ -22,29 +23,65 @@ h1{font-size:20px;margin:0;letter-spacing:.2px}.sub{font-size:12px;color:var(--m
 .results{display:flex;flex-wrap:wrap;gap:6px;min-height:32px}.ball{height:31px;width:31px;border-radius:50%;display:grid;place-items:center;background:#253750;border:1px solid #3b516c;font-size:12px;font-weight:800}.ball.hit{background:var(--green);color:#06251c;border-color:var(--green)}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}.stat{background:#19283c;border-radius:12px;padding:11px 8px;text-align:center}.stat strong{display:block;font-size:17px;margin-top:4px}.stat span{font-size:11px;color:var(--muted)}
 .notice{font-size:11px;line-height:1.5;color:#9fb0c8;margin:14px 4px 0;text-align:center}.history{display:flex;flex-direction:column;gap:8px}.hist{display:flex;justify-content:space-between;align-items:center;background:#19283c;border-radius:10px;padding:10px 11px;font-size:12px}.positive{color:var(--green)}.negative{color:var(--red)}
 @media(max-width:370px){.wrap{padding:12px 9px}.grid{gap:4px}.num{font-size:11px;border-radius:7px}.card{padding:12px}.money{font-size:23px}}
+
+/* Keno Ethiopia visual upgrade */
+:root{--bg:#07111f;--panel:#101e31;--panel2:#172941;--line:#263d57;--text:#f4f8ff;--muted:#9db0c8;--green:#54efb5;--gold:#ffd166;--red:#ff7185}
+body{background:radial-gradient(ellipse at 50% -15%,#23466b 0,transparent 45%),linear-gradient(180deg,#0a1728,#07111f 70%)}
+.wrap{padding-top:calc(14px + env(safe-area-inset-top));padding-bottom:calc(28px + env(safe-area-inset-bottom))}
+.logo{height:48px;width:48px;border-radius:16px;background:linear-gradient(145deg,#79ffd0,#13ad7d);color:#06261b;box-shadow:0 7px 28px #20dba044}
+h1{font-size:20px;letter-spacing:-.5px;font-weight:850}
+.pill{font-size:10px;letter-spacing:1px;font-weight:900;padding:8px 10px;border-color:#24664f;background:#10372f;color:#9bffda}
+.balance{position:relative;overflow:hidden;border-color:#31506a;border-radius:21px;background:linear-gradient(125deg,#1a3951,#14263b 60%,#183d3d);box-shadow:0 12px 35px #0002}
+.balance:after{content:"";position:absolute;width:145px;height:145px;border:1px solid #ffffff0b;border-radius:50%;right:24%;top:-95px;box-shadow:0 0 0 18px #ffffff05,0 0 0 36px #ffffff03;pointer-events:none}
+.balance-note{font-size:11px;color:#a7c7ce;margin-top:4px}
+.reset{position:relative;z-index:1;border-radius:11px;font-size:12px;font-weight:800}
+.card{background:linear-gradient(150deg,#122238,#0e1b2d);border-color:var(--line);border-radius:20px;box-shadow:0 8px 25px #00000014}
+.cardhead h2{font-weight:850}
+.miniicon{width:29px;height:29px;flex:none;border-radius:10px;display:grid;place-items:center;background:#1c3b4b;color:var(--green);font-size:15px}
+.cardhead .headleft{display:flex;align-items:center;gap:8px}
+.counter{font-size:11px;color:#c5d5e8;background:#1a2d43;padding:6px 9px;border-radius:999px;white-space:nowrap}
+.counter b{color:var(--green);font-size:13px}
+.num{background:linear-gradient(145deg,#1d3048,#17273b);border-radius:10px;transition:transform .12s,border-color .12s,background .12s}
+.num.selected{background:linear-gradient(145deg,#73ffd0,#36dca6);border-color:#91ffda;color:#05271d;box-shadow:0 3px 12px #35dba42b}
+.num.win{background:linear-gradient(145deg,#ffe7a1,#ffc94d);border-color:var(--gold);color:#422b00}
+.btn{border-radius:13px;transition:filter .15s,transform .15s}
+.btn:active{transform:scale(.985)}
+.primary{background:linear-gradient(110deg,#6dffd0,#36d9a2);box-shadow:0 6px 17px #35dba41e}
+.secondary{background:#20354d;border-color:#344d69}
+.stakebox{background:#172a40;padding:5px;border-color:#2b425b;border-radius:13px}
+.stakebox button{height:31px;width:31px;border-radius:9px}
+.results .ball{animation:pop .18s ease-out}
+@keyframes pop{from{transform:scale(.72);opacity:.5}to{transform:scale(1);opacity:1}}
+.stats{gap:7px}.stat{background:linear-gradient(145deg,#1a2c42,#142338);border:1px solid #263c55;border-radius:13px;padding:11px 5px}
+.tip{display:flex;gap:9px;align-items:flex-start;background:#102b2b;border:1px solid #1c4d43;border-radius:13px;padding:11px 12px;font-size:11px;line-height:1.45;color:#bcebdc;margin:13px 0}
+.tip strong{color:#e4fff4}
+.empty{text-align:center;padding:12px 5px;color:var(--muted);font-size:11px}
+@media(max-width:380px){.wrap{padding-left:10px;padding-right:10px}.grid{gap:4px}.num{border-radius:8px}.card{padding:12px}.logo{width:42px;height:42px}.pill{padding:7px 8px;font-size:9px}.stats{gap:5px}.stat{padding:10px 3px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+
 </style>
 </head>
 <body>
 <main class="wrap">
   <header class="top">
-    <div class="brand"><div class="logo">✦</div><div><h1>Keno Ethiopia</h1><div class="sub">Quick picks. Just for practice.</div></div></div>
+    <div class="brand"><div class="logo">✦</div><div><h1>Keno Ethiopia</h1><div class="sub">Pick numbers. Enjoy the practice.</div></div></div>
     <div class="pill">FREE PLAY</div>
   </header>
   <section class="balance">
-    <div><div class="eyebrow">Practice balance</div><div class="money" id="balance">ETB 1,000.00</div></div>
+    <div><div class="eyebrow">✧ Practice balance</div><div class="money" id="balance">ETB 1,000.00</div><div class="balance-note">Fictional points · no cash value</div></div>
     <button class="reset" id="reset">Reset</button>
   </section>
   <section class="card">
-    <div class="cardhead"><h2>Choose your numbers</h2><span class="small"><b id="pickCount">0</b>/10 selected</span></div>
+    <div class="cardhead"><span class="miniicon">▦</span><h2>Choose your numbers</h2><span class="counter"><b id="pickCount">0</b> / 10</span></div>
     <div class="grid" id="grid" aria-label="Keno numbers"></div>
-    <div class="actions"><button class="btn secondary" id="auto">⚡ Auto Pick</button><button class="btn secondary" id="clear">Clear picks</button></div>
+    <div class="actions"><button class="btn secondary" id="auto">⚡ Auto Pick</button><button class="btn secondary" id="clear">✕ Clear picks</button></div><div class="tip"><span>💡</span><div><strong>Quick tip</strong><br>Choose up to 10 numbers, or use Auto Pick for a quick selection of 5.</div></div>
   </section>
   <section class="card">
     <div class="row"><div><div style="font-weight:750;font-size:14px">Practice stake</div><div class="small">Simulated only · no real money</div></div>
       <div class="stakebox"><button id="minus" aria-label="Decrease stake">−</button><div class="stake" id="stake">ETB 10</div><button id="plus" aria-label="Increase stake">+</button></div>
     </div>
-    <button class="btn primary" id="draw" style="width:100%">Draw 20 numbers</button>
-    <div class="row"><div style="font-weight:750;font-size:14px">Draw results</div><span class="small" id="drawStatus">Ready when you are</span></div>
+    <button class="btn primary" id="draw" style="width:100%">Draw 20 numbers <span aria-hidden="true">→</span></button>
+    <div class="row"><div style="font-weight:750;font-size:14px">Draw results</div><span class="small" id="drawStatus" role="status" aria-live="polite">Ready when you are</span></div>
     <div class="results" id="results"><span class="small">Your winning numbers will appear here.</span></div>
     <div class="stats">
       <div class="stat"><span>Matched</span><strong id="matched">—</strong></div>
@@ -53,10 +90,10 @@ h1{font-size:20px;margin:0;letter-spacing:.2px}.sub{font-size:12px;color:var(--m
     </div>
   </section>
   <section class="card">
-    <div class="cardhead"><h2>Recent rounds</h2><span class="small">Saved on this device</span></div>
+    <div class="cardhead"><h2>Recent rounds</h2><span class="small">This device</span></div>
     <div class="history" id="history"><div class="small">Your rounds will show here.</div></div>
   </section>
-  <p class="notice">Practice game only. ETB amounts are fictional points, not cash or a promise of winnings. Results are randomly generated on your device. Your balance and history stay in this browser.</p>
+  <p class="notice">Keno Ethiopia is an independent, free practice game and is not affiliated with Kiron or any gambling operator. ETB amounts are fictional points, not cash or a promise of winnings. Results are generated on this device. Your balance and history are saved in this browser on this device.</p>
 </main>
 <script>
 (() => {
@@ -75,8 +112,8 @@ h1{font-size:20px;margin:0;letter-spacing:.2px}.sub{font-size:12px;color:var(--m
      if(selected.has(n)) b.classList.add('selected');
      if(winning.has(n)){ b.classList.add('win'); if(selected.has(n)) b.classList.add('hit'); }
      b.disabled=busy;
-     b.setAttribute('aria-label','Number '+n+(selected.has(n)?', selected':''));
-     b.onclick=()=>{ if(selected.has(n)) selected.delete(n); else if(selected.size<10) selected.add(n); else { $('drawStatus').textContent='Choose up to 10 numbers'; return; } renderGrid(); };
+     b.setAttribute('aria-label','Number '+n+(selected.has(n)?', selected':'')); b.setAttribute('aria-pressed',selected.has(n)?'true':'false');
+     b.onclick=()=>{ if(selected.has(n)) selected.delete(n); else if(selected.size<10) selected.add(n); else { $('drawStatus').textContent='You can choose up to 10 numbers.'; return; } renderGrid(); };
      $('grid').appendChild(b);
    }
    $('pickCount').textContent=selected.size;
@@ -94,8 +131,8 @@ h1{font-size:20px;margin:0;letter-spacing:.2px}.sub{font-size:12px;color:var(--m
  }
  function randomSet(max,count){ const arr=Array.from({length:max},(_,i)=>i+1); for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];} return arr.slice(0,count); }
  function setResults(nums){ $('results').innerHTML=''; nums.forEach(n=>{const b=document.createElement('span');b.className='ball'+(selected.has(n)?' hit':'');b.textContent=n;$('results').appendChild(b);}); }
- $('auto').onclick=()=>{ if(busy)return; selected=new Set(randomSet(80,5)); winning.clear(); $('drawStatus').textContent='5 numbers auto-picked'; $('results').innerHTML='<span class="small">Ready for the draw.</span>'; $('matched').textContent='—'; $('payout').textContent='ETB 0'; $('net').textContent='ETB 0'; renderGrid(); };
- $('clear').onclick=()=>{if(busy)return;selected.clear();winning.clear();renderGrid();$('drawStatus').textContent='Picks cleared';$('results').innerHTML='<span class="small">Your winning numbers will appear here.</span>';};
+ $('auto').onclick=()=>{ if(busy)return; selected=new Set(randomSet(80,5)); winning.clear(); $('drawStatus').textContent='Five numbers selected automatically. Ready to draw.'; $('results').innerHTML='<span class="small">Ready for the draw.</span>'; $('matched').textContent='—'; $('payout').textContent='ETB 0'; $('net').textContent='ETB 0'; renderGrid(); };
+ $('clear').onclick=()=>{if(busy)return;selected.clear();winning.clear();renderGrid();$('drawStatus').textContent='Your picks have been cleared.';$('results').innerHTML='<span class="small">Your winning numbers will appear here.</span>';};
  $('minus').onclick=()=>{stake=Math.max(10,stake-10);renderBalance();};
  $('plus').onclick=()=>{stake=Math.min(1000,stake+10);renderBalance();};
  $('reset').onclick=()=>{if(busy)return;balance=1000;stake=10;selected.clear();winning.clear();history=[];persist();renderBalance();renderGrid();renderHistory();$('matched').textContent='—';$('payout').textContent='ETB 0';$('net').textContent='ETB 0';$('drawStatus').textContent='Practice balance reset';$('results').innerHTML='<span class="small">Your winning numbers will appear here.</span>';};
